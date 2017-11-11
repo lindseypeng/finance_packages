@@ -8,10 +8,10 @@ import datetime
 tickers=input('ticker_list(separate with comma): ')
 s_date=input('start_Date(yyyy,mm,dd):')
 e_date=input('end_Date(yyyy,mm,dd):')
-
-Date=datetime.datetime.now().strftime('%Y%m%d')
-
-
+savepath=input('location_to_save:')
+Date=datetime.datetime.now().strftime('%Y%m%d%H:%M')
+#Date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+#Optional=False
 
 
 tickers = tickers.split(",")
@@ -68,4 +68,5 @@ for ticker in tickers:
         return data
     
     data=data_mgt(ticker,s_date,e_date,today)
-    data.to_csv('/Users/mac/Desktop/finance/archive/{}at{}.csv'.format(ticker,Date))
+    save_path=savepath+'/{}at{}.csv'.format(ticker,Date)
+    data.to_csv(save_path)
