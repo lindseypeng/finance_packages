@@ -5,11 +5,14 @@ import datetime
 
 
 
-tickers=input('ticker_list(quote and comma): ')
+tickers=input('ticker_list(separate with comma): ')
 s_date=input('start_Date(yyyy,mm,dd):')
 e_date=input('end_Date(yyyy,mm,dd):')
 savepath=input('location_to_save:')
-Date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+#Date=datetime.datetime.now().strftime('%Y%m%d')
+Date=datetime.datetime.now().strftime('%Y-%m-%d%H:%M')
+Optional=False
+
 
 tickers = tickers.split(",")
 
@@ -57,15 +60,21 @@ for ticker in tickers:
         Adj_Close='NA'
         Volume=Left.get('Volume','none')
         toDate=datetime.datetime.now().strftime('%Y-%m-%d')
-        d={'Open':[Open],'High':[High],'Low':[Low],'Close':[Close],'Adj Close':[Adj_Close],'Volume':[Volume]}
-        today=pd.DataFrame(data=d,index=[str(toDate)])
+        d={'Date':[toDate],'Open':[Open],'High':[High],'Low':[Low],'Close':[Close],'Adj Close':[Adj_Close],'Volume':[Volume]}
+        today=pd.DataFrame(data=d,index=[0])
       
-        data=data.append(today)
-        #data.to_csv('/Desktop')#whats the saving addres??
+        data=data.append(today,ignore_index=True)
+        
         return data
     
     data=data_mgt(ticker,s_date,e_date,today)
-    save_path=savepath+'{}at{}.csv'.format(ticker,Date)
-    data.to_csv(save_path)
+    
+    if Optional==True:
+
+
+        save_path=savepath+'{}at{}.csv'.format(ticker,Date)
+        data.to_csv(savepath)
+    else:
+        print('you did not choose to save file or typed in True wrong')
         
     
